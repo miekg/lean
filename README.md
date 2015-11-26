@@ -21,4 +21,6 @@ So lean is an evolution (complete rewrite) of pure, with the following changes:
 When lean starts, only 2 characters show on the screen '%' on the left and '~' on the right. All
 other info is omitted (like the user and system you are on), and shown only when needed.
 
-Here are some screencasts on how things look. TODO
+Here is a [screencast](https://asciinema.org/a/d1b5wccq23kglwwhaymoi8z5i) showing the prompt.
+*Note*: for some reason the screencast does not show the space between the '%' character and
+the start of the command line.
