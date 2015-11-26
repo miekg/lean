@@ -9,6 +9,7 @@ stays out of your face.
 So lean is an evolution (complete rewrite) of pure, with the following changes:
 
 * Defaults to a very sparse setup, only showing information you need at the moment.
+* Comes with the perfect prompt character. Author went through the entire ASCII range to find it.
 * Never displays your username (assuming you know who you are).
 * When tmux is active it shows a yellow 't' (I disabled the tmux bar, so this is some
     visual indication that tmux is active).
