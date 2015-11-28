@@ -68,7 +68,7 @@ prompt_lean_preexec() {
 }
 
 prompt_lean_pwd() {
-    local lean_path=`print -Pn '%~'`
+    local lean_path="`print -Pn '%~'`"
     if (($#lean_path / $COLUMNS.0 * 100 > ${PROMPT_LEAN_PATH_PERCENT:=60})); then
         print -Pn '...%2/'
         return
