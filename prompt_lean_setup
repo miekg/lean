@@ -91,7 +91,7 @@ prompt_lean_precmd() {
     [[ -n $jobs ]] && prompt_lean_jobs="%F{242}["${(j:,:)jobs}"] "
 
     local PROMPT_LEAN_RIGHT="%F{yellow}`prompt_lean_cmd_exec_time`%f%F{blue}`prompt_lean_pwd`%F{242}$vcs_info_msg_0_`prompt_lean_git_dirty`$prompt_lean_host%f"
-    local PROMPT_LEAN_LEFT="$prompt_lean_jobs%F{yellow}$prompt_lean_tmux%(?.%F{blue}.%B%F{red})%#%b%f "
+    local PROMPT_LEAN_LEFT="$prompt_lean_jobs%F{yellow}$prompt_lean_tmux%(?.%F{blue}.%B%F{red})%# %b%f "
 
     unset cmd_timestamp # reset value since `preexec` isn't always triggered
 
