@@ -73,7 +73,7 @@ prompt_lean_pwd() {
         print -Pn '...%2/'
         return
     fi
-    print $lean_path
+    print "$lean_path"
 }
 
 prompt_lean_precmd() {
@@ -90,13 +90,10 @@ prompt_lean_precmd() {
     prompt_lean_jobs=""
     [[ -n $jobs ]] && prompt_lean_jobs="%F{242}["${(j:,:)jobs}"] "
 
-    local PROMPT_LEAN_RIGHT="%F{yellow}`prompt_lean_cmd_exec_time`%f%F{blue}`prompt_lean_pwd`%F{242}$vcs_info_msg_0_`prompt_lean_git_dirty`$prompt_lean_host%f"
-    local PROMPT_LEAN_LEFT="$prompt_lean_jobs%F{yellow}$prompt_lean_tmux%(?.%F{blue}.%B%F{red})%# %b%f "
+    PROMPT="$prompt_lean_jobs%F{yellow}$prompt_lean_tmux%(?.%F{blue}.%B%F{red})%#%f%b "
+    RPROMPT="%F{yellow}`prompt_lean_cmd_exec_time`%f%F{blue}`prompt_lean_pwd`%F{242}$vcs_info_msg_0_`prompt_lean_git_dirty`$prompt_lean_host%f"
 
     unset cmd_timestamp # reset value since `preexec` isn't always triggered
-
-    PROMPT=$PROMPT_LEAN_LEFT
-    RPROMPT=$PROMPT_LEAN_RIGHT
 }
 
 prompt_lean_setup() {
