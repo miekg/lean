@@ -24,6 +24,7 @@ other info is omitted (like the user and system you are on), and shown only when
 
 Here is a [screencast](https://asciinema.org/a/d1b5wccq23kglwwhaymoi8z5i) showing the prompt.
 *Note*: for some reason the screencast does not show the space between the '%' character and
-the start of the command line.
+the start of the command line. **NOTE** This [issue](https://github.com/miekg/lean/issues/2) has
+been fixed.
 
 [![asciicast](https://asciinema.org/a/d1b5wccq23kglwwhaymoi8z5i.png)](https://asciinema.org/a/d1b5wccq23kglwwhaymoi8z5i)
