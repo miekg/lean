@@ -78,6 +78,7 @@ prompt_lean_pwd() {
 
 prompt_lean_precmd() {
     vcs_info
+    rehash
 
     local jobs
     local prompt_lean_jobs
