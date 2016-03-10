@@ -17,7 +17,9 @@ moment.
 range to find it.
 * Never displays your username (assuming you know who you are).
 * When tmux is active it shows a yellow 't' (I disabled the tmux bar, so this
-is some visual indication that tmux is active).
+is some visual indication that tmux is active). If you don't want this
+indicator, you can always set `PROMPT_LEAN_TMUX=""` prior to loading this
+plugin (or prior to sourcing `zgen`, etc.).
 * Show remote host if logged in through SSH.
 * All in one line, most stuff in the right prompt, leaving the left prompt nice
 and clean
