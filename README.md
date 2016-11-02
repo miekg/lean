@@ -26,6 +26,7 @@ and clean
 * shows background jobs (in the left prompt)
 * show (dirty) git repos
 * shortens path if needed (longer then 70% of your screen)
+* Magic enter; bla bla
 
 When lean starts, only 2 characters show on the screen '%' on the left and '~'
 on the right. All other info is omitted (like the user and system you are on),

@@ -6,6 +6,7 @@
 # MIT License
 
 PROMPT_LEAN_TMUX=${PROMPT_LEAN_TMUX-"t "}
+PROMPT_LEAN_MAGIC_ENTER=${PROMPT_LEAN_MAGIC_ENTER-"yes"}
 PROMPT_LEAN_PATH_PERCENT=${PROMPT_LEAN_PATH_PERCENT-60}
 
 prompt_lean_help() {
@@ -17,7 +18,11 @@ the jobs numbers of background jobs. When the exit code of a process isn't
 zero the prompt turns red. If a process takes more then 5 (default) seconds
 to run the total running time is shown in the next prompt.
 
-Currently there is no configuration possible.
+Configuration:
+
+PROMPT_LEAN_TMUX: used to indicate being in tmux, set to "t ", by default
+PROMPT_LEAN_MAGIC_ENTER: enter on an empty line gives some extra information,
+    like current time and date. Default to "yes".
 
 You can invoke it thus:
 
@@ -97,6 +102,23 @@ prompt_lean_precmd() {
     unset cmd_timestamp # reset value since `preexec` isn't always triggered
 }
 
+# copyied from github.com/subnixr/minimal.
+# magic enter: if no command is written, hitting enter will display some info
+function lean_magic_enter {
+  if [ -z "$BUFFER" ]; then
+
+    local ouput=$(date)
+    local output="$output\t$(hostname)"
+
+    printf "$output\n"
+
+    zle redisplay
+  else
+    zle accept-line
+  fi
+}
+
+
 prompt_lean_setup() {
     prompt_opts=(cr subst percent)
 
@@ -113,6 +135,11 @@ prompt_lean_setup() {
 
     [[ "$SSH_CONNECTION" != '' ]] && prompt_lean_host=" %F{yellow}%m%f"
     [[ "$TMUX" != '' ]] && prompt_lean_tmux=$PROMPT_LEAN_TMUX
+
+    if [ "$PROMPT_LEAN_MAGIC_ENTER" = "yes" ]; then
+        zle -N lean_magic_enter
+        bindkey "^M" lean_magic_enter
+    fi
 }
 
 prompt_lean_setup "$@"
