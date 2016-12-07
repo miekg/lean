@@ -46,7 +46,7 @@ prompt_lean_git_dirty() {
     # check if we're in a git repo
     command git rev-parse --is-inside-work-tree &>/dev/null || return
     # check if it's dirty
-    git diff-files --no-ext-diff --quiet || git diff-index --no-ext-diff --quiet --cached HEAD
+    git diff-files --no-ext-diff --quiet && git diff-index --no-ext-diff --quiet --cached HEAD
 
     (($? != 0)) && echo ' +'
 }
