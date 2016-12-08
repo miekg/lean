@@ -23,10 +23,9 @@ plugin (or prior to sourcing `zgen`, etc.).
 * Show remote host if logged in through SSH.
 * All in one line, most stuff in the right prompt, leaving the left prompt nice
 and clean
-* shows background jobs (in the left prompt)
-* show (dirty) git repos
-* shortens path if needed (longer then 70% of your screen)
-* Magic enter; bla bla
+* Shows background jobs (in the left prompt)
+* Show (dirty) git repos
+* Shortens path if needed (longer then 70% of your screen)
 
 When lean starts, only 2 characters show on the screen '%' on the left and '~'
 on the right. All other info is omitted (like the user and system you are on),
