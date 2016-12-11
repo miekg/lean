@@ -93,7 +93,10 @@ prompt_lean_precmd() {
     prompt_lean_jobs=""
     [[ -n $jobs ]] && prompt_lean_jobs="%F{242}["${(j:,:)jobs}"] "
 
-    PROMPT="$prompt_lean_jobs%F{yellow}$prompt_lean_tmux%(?.%F{blue}.%B%F{red})%#%f%b "
+    prompt_virtualenv=""
+    [[ -n ${VIRTUAL_ENV} ]] && prompt_virtualenv="%F{blue}("${VIRTUAL_ENV:t}") "
+
+    PROMPT="$prompt_virtualenv$prompt_lean_jobs%F{yellow}$prompt_lean_tmux%(?.%F{blue}.%B%F{red})%#%f%b "
     RPROMPT="%F{yellow}`prompt_lean_cmd_exec_time`%f%F{blue}`prompt_lean_pwd`%F{242}$vcs_info_msg_0_`prompt_lean_git_dirty`$prompt_lean_host%f"
 
     unset cmd_timestamp # reset value since `preexec` isn't always triggered
