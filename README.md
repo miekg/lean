@@ -9,12 +9,12 @@ code of the process isn't 0, git integration. So I took "pure", mixed in my
 ideas of what a prompt should look like and came up with "lean" - a 1 line
 prompt that stays out of your face.
 
-So lean is an evolution (complete rewrite) of pure, with the following changes:
+So lean is an evolution of pure, with the following changes:
 
 * Defaults to a very sparse setup, only showing information you need at the
 moment.
 * Comes with the perfect prompt character. Author went through the entire ASCII
-range to find it.
+range to find it (and found it pretty quickly!)
 * Never displays your username (assuming you know who you are).
 * When tmux is active it shows a yellow 't' (I disabled the tmux bar, so this
 is some visual indication that tmux is active). If you don't want this
@@ -26,6 +26,8 @@ and clean
 * Shows background jobs (in the left prompt)
 * Show (dirty) git repos
 * Shortens path if needed (longer then 70% of your screen)
+* Uses `PROMPT_LEAN_LEFT` and `PROMPT_LEAN_RIGHT` to allow customization of the left
+  and/or right side of the prompt.
 
 When lean starts, only 2 characters show on the screen '%' on the left and '~'
 on the right. All other info is omitted (like the user and system you are on),
