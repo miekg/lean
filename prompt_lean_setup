@@ -80,7 +80,7 @@ prompt_lean_pwd() {
     print "$lean_path"
 }
 function zle-line-init zle-keymap-select {
-    local lean_vimode_indicator="%F{$VIMODE_INDICATOR_COLOR}$VIMODE_INDICATOR%f"
+    local lean_vimode_indicator="%F{red}[NORMAL]%f"
     prompt_lean_vimode="${${KEYMAP/vicmd/$lean_vimode_indicator}/(main|viins)/}"
 
     PROMPT="$prompt_lean_jobs%F{yellow}${prompt_lean_tmux}%f`$PROMPT_LEAN_LEFT`%f%(?.%F{blue}.%B%F{red})%#%f%b "
