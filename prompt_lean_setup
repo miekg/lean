@@ -79,7 +79,15 @@ prompt_lean_pwd() {
     fi
     print "$lean_path"
 }
+function zle-line-init zle-keymap-select {
+    local lean_vimode_indicator="%F{$VIMODE_INDICATOR_COLOR}$VIMODE_INDICATOR%f"
+    prompt_lean_vimode="${${KEYMAP/vicmd/$lean_vimode_indicator}/(main|viins)/}"
 
+    PROMPT="$prompt_lean_jobs%F{yellow}${prompt_lean_tmux}%f`$PROMPT_LEAN_LEFT`%f%(?.%F{blue}.%B%F{red})%#%f%b "
+    RPROMPT="%F{yellow}`prompt_lean_cmd_exec_time`%f$prompt_lean_vimode%F{blue}`prompt_lean_pwd`%F{242}$vcs_info_msg_0_`prompt_lean_git_dirty`$prompt_lean_host%f`$PROMPT_LEAN_RIGHT`%f"
+
+    zle reset-prompt
+}
 prompt_lean_precmd() {
     vcs_info
     rehash
@@ -107,6 +115,9 @@ prompt_lean_setup() {
     zmodload zsh/datetime
     autoload -Uz add-zsh-hook
     autoload -Uz vcs_info
+
+    zle -N zle-line-init
+    zle -N zle-keymap-select
 
     add-zsh-hook precmd prompt_lean_precmd
     add-zsh-hook preexec prompt_lean_preexec
