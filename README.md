@@ -41,7 +41,7 @@ character and the start of the command line. **NOTE** This
 
 [![asciicast](https://asciinema.org/a/d1b5wccq23kglwwhaymoi8z5i.png)](https://asciinema.org/a/d1b5wccq23kglwwhaymoi8z5i)
 
-Instalation
+Installation
 ===========
 
 If you use [zgen](https://github.com/tarjoilija/zgen) you can add the following
@@ -52,3 +52,11 @@ zgen load miekg/lean
 ```
 
 and force reload with `zgen reset && source~/.zshrc`.
+
+Configuration
+=============
+
+For a configurable insertmode indicator, set the `LEAN_VIMODE` and `LEAN_VIMODE_FORMAT`
+variables. 
+
+`LEAN_VIMODE_FORMAT` defaults to `"%F{red}[NORMAL]%f"`
