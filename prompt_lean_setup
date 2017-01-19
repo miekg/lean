@@ -22,6 +22,8 @@ Configuration:
 PROMPT_LEAN_TMUX: used to indicate being in tmux, set to "t ", by default
 PROMPT_LEAN_LEFT: executed to allow custom information in the left side
 PROMPT_LEAN_RIGHT: executed to allow custom information in the right side
+PROMPT_LEAN_VIMODE: used to determine wither or not to display indicator
+PROMPT_LEAN_VIMODE_FORMAT: Defaults to "%F{red}[NORMAL]%f"
 
 You can invoke it thus:
 
@@ -96,8 +98,8 @@ function zle-line-init zle-keymap-select {
     [[ -n $jobs ]] && prompt_lean_jobs="%F{242}["${(j:,:)jobs}"] "
 
     local lean_vimode_default="%F{red}[NORMAL]%f"
-    #If LEAN_VIMODE is set, set lean_vimode_indicator to either LEAN_VIMOD_FORMAT or a default value
-    local lean_vimode_indicator="${LEAN_VIMODE:+${LEAN_VIMODE_FORMAT:-${lean_vimode_default}}}"
+    #If LEAN_VIMODE is set, set lean_vimode_indicator to either PROMPT_LEAN_VIMOD_FORMAT or a default value
+    local lean_vimode_indicator="${PROMPT_LEAN_VIMODE:+${PROMPT_LEAN_VIMODE_FORMAT:-${lean_vimode_default}}}"
 
     prompt_lean_vimode="${${KEYMAP/vicmd/$lean_vimode_indicator}/(main|viins)/}"
 

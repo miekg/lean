@@ -28,6 +28,9 @@ and clean
 * Shortens path if needed (longer then 70% of your screen)
 * Uses `PROMPT_LEAN_LEFT` and `PROMPT_LEAN_RIGHT` to allow customization of the left
   and/or right side of the prompt.
+* For a configurable insertmode indicator, set the `LEAN_VIMODE` and `LEAN_VIMODE_FORMAT`
+variables. 
+  `LEAN_VIMODE_FORMAT` defaults to `"%F{red}[NORMAL]%f"`
 
 When lean starts, only 2 characters show on the screen '%' on the left and '~'
 on the right. All other info is omitted (like the user and system you are on),
@@ -52,11 +55,3 @@ zgen load miekg/lean
 ```
 
 and force reload with `zgen reset && source~/.zshrc`.
-
-Configuration
-=============
-
-For a configurable insertmode indicator, set the `LEAN_VIMODE` and `LEAN_VIMODE_FORMAT`
-variables. 
-
-`LEAN_VIMODE_FORMAT` defaults to `"%F{red}[NORMAL]%f"`
