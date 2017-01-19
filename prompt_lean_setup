@@ -82,7 +82,7 @@ prompt_lean_pwd() {
     print "$lean_path"
 }
 
-function zle-line-init zle-keymap-select {
+prompt_lean_precmd() {
     vcs_info
     rehash
 
@@ -107,6 +107,10 @@ function zle-line-init zle-keymap-select {
     RPROMPT="%F{yellow}`prompt_lean_cmd_exec_time`%f$prompt_lean_vimode%F{blue}`prompt_lean_pwd`%F{242}$vcs_info_msg_0_`prompt_lean_git_dirty`$prompt_lean_host%f`$PROMPT_LEAN_RIGHT`%f"
 
     unset cmd_timestamp # reset value since `preexec` isn't always triggered
+}
+
+function zle-line-init zle-keymap-select {
+    prompt_lean_precmd
     zle reset-prompt
 }
 
@@ -120,7 +124,7 @@ prompt_lean_setup() {
     zle -N zle-line-init
     zle -N zle-keymap-select
 
-#    add-zsh-hook precmd prompt_lean_precmd
+    add-zsh-hook precmd prompt_lean_precmd
     add-zsh-hook preexec prompt_lean_preexec
 
     zstyle ':vcs_info:*' enable git
