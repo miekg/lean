@@ -95,7 +95,10 @@ function zle-line-init zle-keymap-select {
     prompt_lean_jobs=""
     [[ -n $jobs ]] && prompt_lean_jobs="%F{242}["${(j:,:)jobs}"] "
 
-    local lean_vimode_indicator="%F{red}[NORMAL]%f"
+    local lean_vimode_default="%F{red}[NORMAL]%f"
+    #If LEAN_VIMODE is set, set lean_vimode_indicator to either LEAN_VIMOD_FORMAT or a default value
+    local lean_vimode_indicator="${LEAN_VIMODE:+${LEAN_VIMODE_FORMAT:-${lean_vimode_default}}}"
+
     prompt_lean_vimode="${${KEYMAP/vicmd/$lean_vimode_indicator}/(main|viins)/}"
 
     PROMPT="$prompt_lean_jobs%F{yellow}${prompt_lean_tmux}%f`$PROMPT_LEAN_LEFT`%f%(?.%F{blue}.%B%F{red})%#%f%b "
