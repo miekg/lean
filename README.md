@@ -28,6 +28,9 @@ and clean
 * Shortens path if needed (longer then 70% of your screen)
 * Uses `PROMPT_LEAN_LEFT` and `PROMPT_LEAN_RIGHT` to allow customization of the left
   and/or right side of the prompt.
+* For a configurable insertmode indicator, set the `PROMPT_LEAN_VIMODE` and `PROMPT_LEAN_VIMODE_FORMAT`
+variables. 
+  `PROMPT_LEAN_VIMODE_FORMAT` defaults to `"%F{red}[NORMAL]%f"`
 
 When lean starts, only 2 characters show on the screen '%' on the left and '~'
 on the right. All other info is omitted (like the user and system you are on),
@@ -41,7 +44,7 @@ character and the start of the command line. **NOTE** This
 
 [![asciicast](https://asciinema.org/a/d1b5wccq23kglwwhaymoi8z5i.png)](https://asciinema.org/a/d1b5wccq23kglwwhaymoi8z5i)
 
-Instalation
+Installation
 ===========
 
 If you use [zgen](https://github.com/tarjoilija/zgen) you can add the following
