@@ -132,6 +132,8 @@ prompt_lean_setup() {
 
     [[ "$SSH_CONNECTION" != '' ]] && prompt_lean_host=" %F{yellow}%m%f"
     [[ "$TMUX" != '' ]] && prompt_lean_tmux=$PROMPT_LEAN_TMUX
+
+    return 0
 }
 
 prompt_lean_setup "$@"
