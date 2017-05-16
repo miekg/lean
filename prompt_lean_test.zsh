@@ -70,7 +70,6 @@ comphex "tmux" $PROMPT $expect
 
 ( cd /tmp
 PROMPT_LEAN_CMD_MAX_EXEC_TIME=0.1
-#source prompt_lean_setup # TMUX is only evaluated in setup
 sleep 1
 
 prompt_lean_precmd
@@ -78,4 +77,3 @@ prompt_lean_preexec
 expect='%F{yellow}1s %f%F{blue}/tmp%F{242}$vcs_info_msg_0_ %F{yellow}%m%f%f%f'
 comphex "time" $RPROMPT $expect
 )
-
