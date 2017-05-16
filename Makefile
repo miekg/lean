@@ -1,3 +1,3 @@
 .PHONY: test
 test:
-	./prompt_lean_test.zsh
+	zsh prompt_lean_test.zsh
