@@ -26,14 +26,14 @@ source prompt_lean_setup
 (
 prompt_lean_precmd
 prompt_lean_preexec
-expect='%F{yellow}%f%f%(?.%F{blue}.%B%F{red})%#%f%b '
+expect='%F{yellow}%f%f%(?.%F{140}.%B%F{red})%#%f%b '
 comphex "prompt" $PROMPT $expect
 )
 
 ( cd /tmp
 prompt_lean_precmd
 prompt_lean_preexec
-expect='%F{yellow}%f%F{blue}/tmp%F{242}$vcs_info_msg_0_ %F{yellow}%m%f%f%f'
+expect='%F{yellow}%f%F{140}/tmp%F{241}$vcs_info_msg_0_ %F{yellow}%m%f%f%f'
 comphex "rprompt" $RPROMPT $expect
 )
 
@@ -43,7 +43,7 @@ PROMPT_LEAN_LEFT=left
 
 prompt_lean_precmd
 prompt_lean_preexec
-expect='%F{yellow}%fleft%f%(?.%F{blue}.%B%F{red})%#%f%b '
+expect='%F{yellow}%fleft%f%(?.%F{140}.%B%F{red})%#%f%b '
 comphex "lean_left" $PROMPT $expect
 )
 
@@ -53,7 +53,7 @@ PROMPT_LEAN_RIGHT=right
 
 prompt_lean_precmd
 prompt_lean_preexec
-expect='%F{yellow}%f%F{blue}/tmp%F{242}$vcs_info_msg_0_ %F{yellow}%m%f%fright%f'
+expect='%F{yellow}%f%F{140}/tmp%F{241}$vcs_info_msg_0_ %F{yellow}%m%f%fright%f'
 comphex "lean_right" $RPROMPT $expect
 )
 
@@ -64,7 +64,7 @@ source prompt_lean_setup # TMUX is only evaluated in setup
 
 prompt_lean_precmd
 prompt_lean_preexec
-expect='%F{yellow}t%f%f%(?.%F{blue}.%B%F{red})%#%f%b '
+expect='%F{yellow}t%f%f%(?.%F{140}.%B%F{red})%#%f%b '
 comphex "tmux" $PROMPT $expect
 )
 
@@ -74,6 +74,6 @@ sleep 1
 
 prompt_lean_precmd
 prompt_lean_preexec
-expect='%F{yellow}1s %f%F{blue}/tmp%F{242}$vcs_info_msg_0_ %F{yellow}%m%f%f%f'
+expect='%F{yellow}1s %f%F{140}/tmp%F{241}$vcs_info_msg_0_ %F{yellow}%m%f%f%f'
 comphex "time" $RPROMPT $expect
 )

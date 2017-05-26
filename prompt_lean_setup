@@ -2,6 +2,9 @@
 # by Miek Gieben: https://github.com/miekg/lean
 #
 # Base on Pure by Sindre Sorhus: https://github.com/sindresorhus/pure
+# Colors used: (see Vim's paramount theme)
+# 241 is the gray that is used.
+# 140 is the blue.
 #
 # MIT License
 
@@ -95,7 +98,7 @@ prompt_lean_precmd() {
     }
     # print with [ ] and comma separated
     prompt_lean_jobs=""
-    [[ -n $jobs ]] && prompt_lean_jobs="%F{242}["${(j:,:)jobs}"] "
+    [[ -n $jobs ]] && prompt_lean_jobs="%F{241}["${(j:,:)jobs}"] "
 
     local lean_vimode_default="%F{red}[NORMAL]%f"
     #If LEAN_VIMODE is set, set lean_vimode_indicator to either PROMPT_LEAN_VIMOD_FORMAT or a default value
@@ -104,8 +107,8 @@ prompt_lean_precmd() {
     prompt_lean_vimode="${${KEYMAP/vicmd/$lean_vimode_indicator}/(main|viins)/}"
 
     local vcs_info_str='$vcs_info_msg_0_' # avoid https://github.com/njhartwell/pw3nage
-    PROMPT="$prompt_lean_jobs%F{yellow}${prompt_lean_tmux}%f`$PROMPT_LEAN_LEFT`%f%(?.%F{blue}.%B%F{red})%#%f%b "
-    RPROMPT="%F{yellow}`prompt_lean_cmd_exec_time`%f$prompt_lean_vimode%F{blue}`prompt_lean_pwd`%F{242}$vcs_info_str`prompt_lean_git_dirty`$prompt_lean_host%f`$PROMPT_LEAN_RIGHT`%f"
+    PROMPT="$prompt_lean_jobs%F{yellow}${prompt_lean_tmux}%f`$PROMPT_LEAN_LEFT`%f%(?.%F{140}.%B%F{red})%#%f%b "
+    RPROMPT="%F{yellow}`prompt_lean_cmd_exec_time`%f$prompt_lean_vimode%F{140}`prompt_lean_pwd`%F{241}$vcs_info_str`prompt_lean_git_dirty`$prompt_lean_host%f`$PROMPT_LEAN_RIGHT`%f"
 
     unset cmd_timestamp # reset value since `preexec` isn't always triggered
 }
