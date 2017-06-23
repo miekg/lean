@@ -114,6 +114,9 @@ prompt_lean_precmd() {
     RPROMPT="%F{yellow}`prompt_lean_cmd_exec_time`%f$prompt_lean_vimode%F{"$COLOR2"}`prompt_lean_pwd`%F{"$COLOR1"}$vcs_info_str`prompt_lean_git_dirty`$prompt_lean_host%f`$PROMPT_LEAN_RIGHT`%f"
 
     unset cmd_timestamp # reset value since `preexec` isn't always triggered
+
+    # shows the current dir in the title when there are no active processes
+    print -Pn "\e]0;$PWD:t\a"
 }
 
 function zle-keymap-select {
