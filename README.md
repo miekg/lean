@@ -31,6 +31,8 @@ and clean
 * For a configurable insertmode indicator, set the `PROMPT_LEAN_VIMODE` and `PROMPT_LEAN_VIMODE_FORMAT`
 variables. 
   `PROMPT_LEAN_VIMODE_FORMAT` defaults to `"%F{red}[NORMAL]%f"`
+* Configurable colors to match your preferred scheme, by setting
+  `PROMPT_LEAN_COLOR1` and `PROMPT_LEAN_COLOR2`
 
 When lean starts, only 2 characters show on the screen '%' on the left and '~'
 on the right. All other info is omitted (like the user and system you are on),
