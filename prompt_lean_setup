@@ -105,11 +105,6 @@ prompt_lean_precmd() {
     prompt_lean_jobs=""
     [[ -n $jobs ]] && prompt_lean_jobs="%F{"$COLOR1"}["${(j:,:)jobs}"] "
 
-    # optional support for python module from zprezto
-    if (( $+functions[python-info] )); then
-        python-info
-    fi
-
     local lean_vimode_default="%F{red}[NORMAL]%f"
     #If LEAN_VIMODE is set, set lean_vimode_indicator to either PROMPT_LEAN_VIMOD_FORMAT or a default value
     local lean_vimode_indicator="${PROMPT_LEAN_VIMODE:+${PROMPT_LEAN_VIMODE_FORMAT:-${lean_vimode_default}}}"
@@ -118,7 +113,7 @@ prompt_lean_precmd() {
 
     setopt promptsubst
     local vcs_info_str='$vcs_info_msg_0_' # avoid https://github.com/njhartwell/pw3nage
-    PROMPT="$prompt_lean_jobs%F{yellow}${prompt_lean_tmux}%f${python_info[virtualenv]}`$PROMPT_LEAN_LEFT`%f%(?.%F{"$COLOR2"}.%B%F{red})%#%f%b "
+    PROMPT="$prompt_lean_jobs%F{yellow}${prompt_lean_tmux}%f`$PROMPT_LEAN_LEFT`%f%(?.%F{"$COLOR2"}.%B%F{red})%#%f%b "
     RPROMPT="%F{yellow}`prompt_lean_cmd_exec_time`%f$prompt_lean_vimode%F{"$COLOR2"}`prompt_lean_pwd`%F{"$COLOR1"}$vcs_info_str`prompt_lean_git_dirty`$prompt_lean_host%f`$PROMPT_LEAN_RIGHT`%f"
 
     unset cmd_timestamp # reset value since `preexec` isn't always triggered

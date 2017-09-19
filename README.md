@@ -49,6 +49,8 @@ character and the start of the command line. **NOTE** This
 Installation
 ===========
 
+zgen
+---
 If you use [zgen](https://github.com/tarjoilija/zgen) you can add the following
 to your `~/.zshrc`:
 
@@ -59,3 +61,35 @@ zgen load miekg/lean
 and force reload with `zgen reset && source~/.zshrc`.
 
 Note you must have the option PROMPT_SUBST set, see zshoptions(1).
+
+prezto
+---
+If you use [prezto](https://github.com/sorin-ionescu/prezto)
+you should do the following (unless lean is included):
+```
+cd ~/.zprezto/
+git submodule add https://github.com/miekg/lean.git modules/prompt/external/lean
+git submodule update --init --recursive
+cd modules/prompt/functions
+ln -s ../external/lean/prompt_lean_setup
+```
+Then in `~/.zpreztorc`:
+```
+zstyle ':prezto:module:prompt' theme 'lean'
+```
+You can customize prompt colors in `~/.zshenv`:
+```
+export PROMPT_LEAN_COLOR1='blue'
+export PROMPT_LEAN_COLOR2='green'
+```
+You can customize `PROMPT_LEAN_LEFT` and `PROMPT_LEAN_RIGHT` in `~/.zshrc`:
+```
+# for instance here goes prezto python module support
+function lean-left {
+  if (( $+functions[python-info] )); then
+      python-info
+      echo $python_info[virtualenv]
+  fi
+}
+export PROMPT_LEAN_LEFT='lean-left'
+```
