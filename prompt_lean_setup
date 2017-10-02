@@ -125,7 +125,7 @@ function zle-keymap-select {
 }
 
 prompt_lean_setup() {
-    prompt_opts=(cr subst percent)
+    prompt_opts=(cr percent sp subst)
 
     zmodload zsh/datetime
     autoload -Uz add-zsh-hook
