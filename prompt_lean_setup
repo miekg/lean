@@ -72,13 +72,19 @@ prompt_lean_cmd_exec_time() {
     (($elapsed > ${PROMPT_LEAN_CMD_MAX_EXEC_TIME:=5})) && prompt_lean_human_time $elapsed
 }
 
-prompt_lean_preexec() {
-    cmd_timestamp=$EPOCHSECONDS
+prompt_lean_set_title() {
+    # emacs terminal does not support settings the title
+    (( ${+EMACS} )) && return
 
     # shows the current tty and dir and executed command in the title when a process is active
     print -Pn "\e]0;"
     print -Pn "%l %1d: $1"
     print -Pn "\a"
+}
+
+prompt_lean_preexec() {
+    cmd_timestamp=$EPOCHSECONDS
+    prompt_lean_set_title
 }
 
 prompt_lean_pwd() {
