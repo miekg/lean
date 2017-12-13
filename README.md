@@ -58,7 +58,7 @@ to your `~/.zshrc`:
 zgen load miekg/lean
 ```
 
-and force reload with `zgen reset && source~/.zshrc`.
+and force reload with `zgen reset && source ~/.zshrc`.
 
 Note you must have the option PROMPT_SUBST set, see zshoptions(1).
 
