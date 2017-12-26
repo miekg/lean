@@ -104,7 +104,7 @@ prompt_lean_precmd() {
     local prompt_lean_jobs
     unset jobs
     for a (${(k)jobstates}) {
-        j=$jobstates[$a];i="${${(@s,:,)j}[2]}"
+        j=$jobstates[$a];i='${${(@s,:,)j}[2]}'
         jobs+=($a${i//[^+-]/})
     }
     # print with [ ] and comma separated
