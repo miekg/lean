@@ -77,7 +77,8 @@ prompt_lean_preexec() {
 
     # shows the current tty and dir and executed command in the title when a process is active
     print -Pn "\e]0;"
-    print -Pn "%l %1d: $1"
+    print -Pn "%l %1d"
+    print -n ": $1"
     print -Pn "\a"
 }
 
