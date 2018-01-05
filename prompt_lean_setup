@@ -79,7 +79,8 @@ prompt_lean_cmd_exec_time() {
 prompt_lean_set_title() {
     # shows the current tty and dir and executed command in the title when a process is active
     print -Pn "\e]0;"
-    print -Pn "%l %1d: $1"
+    print -Pn "%l %1d"
+    print -n ": $1"
     print -Pn "\a"
 }
 
