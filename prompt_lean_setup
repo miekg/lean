@@ -13,6 +13,7 @@ COLOR2=${PROMPT_LEAN_COLOR2-"140"}
 
 PROMPT_LEAN_TMUX=${PROMPT_LEAN_TMUX-"t "}
 PROMPT_LEAN_PATH_PERCENT=${PROMPT_LEAN_PATH_PERCENT-60}
+PROMPT_LEAN_NOTITLE=${PROMPT_LEAN_NOTITLE-0}
 
 prompt_lean_help() {
   cat <<'EOF'
@@ -30,8 +31,11 @@ PROMPT_LEAN_LEFT: executed to allow custom information in the left side
 PROMPT_LEAN_RIGHT: executed to allow custom information in the right side
 PROMPT_LEAN_COLOR1: jobs and VCS info indicator color
 PROMPT_LEAN_COLOR2: prompt character and directory color
-PROMPT_LEAN_VIMODE: used to determine wither or not to display indicator
+PROMPT_LEAN_VIMODE: used to determine wether or not to display indicator
 PROMPT_LEAN_VIMODE_FORMAT: Defaults to "%F{red}[NORMAL]%f"
+PROMPT_LEAN_NOTITLE: used to determine wether or not to set title, set to 0
+ by defualt. Set it to your own condition, make it to be 1 when you don't
+ want title.
 
 You can invoke it thus:
 
@@ -72,14 +76,19 @@ prompt_lean_cmd_exec_time() {
     (($elapsed > ${PROMPT_LEAN_CMD_MAX_EXEC_TIME:=5})) && prompt_lean_human_time $elapsed
 }
 
-prompt_lean_preexec() {
-    cmd_timestamp=$EPOCHSECONDS
-
+prompt_lean_set_title() {
     # shows the current tty and dir and executed command in the title when a process is active
     print -Pn "\e]0;"
     print -Pn "%l %1d"
     print -n ": $1"
     print -Pn "\a"
+}
+
+prompt_lean_preexec() {
+    cmd_timestamp=$EPOCHSECONDS
+    local lean_no_title=$PROMPT_LEAN_NOTITLE
+    (($lean_no_title != 1)) && prompt_lean_set_title
+    unset lean_no_title
 }
 
 prompt_lean_pwd() {
