@@ -34,8 +34,8 @@ PROMPT_LEAN_COLOR2: prompt character and directory color
 PROMPT_LEAN_VIMODE: used to determine wether or not to display indicator
 PROMPT_LEAN_VIMODE_FORMAT: Defaults to "%F{red}[NORMAL]%f"
 PROMPT_LEAN_NOTITLE: used to determine wether or not to set title, set to 0
- by defualt, it will be 1 under Emacs. Set it to your own indicator, make
- it to be 1 when you don't want title.
+ by defualt. Set it to your own condition, make it to be 1 when you don't
+ want title.
 
 You can invoke it thus:
 
@@ -85,7 +85,7 @@ prompt_lean_set_title() {
 
 prompt_lean_preexec() {
     cmd_timestamp=$EPOCHSECONDS
-    local lean_no_title=$((${+EMACS} || $PROMPT_LEAN_NOTITLE))
+    local lean_no_title=$PROMPT_LEAN_NOTITLE
     (($lean_no_title != 1)) && prompt_lean_set_title
     unset lean_no_title
 }
