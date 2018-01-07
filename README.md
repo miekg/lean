@@ -35,7 +35,6 @@ variables.
   `PROMPT_LEAN_COLOR1` and `PROMPT_LEAN_COLOR2`
 * Use `PROMPT_LEAN_NOTITLE` to customize when the title should not be display. Useful for terminals can not show title properly, for example terminals under Emacs. Write your own conditions for this variable and make sure it is 1 when you don't want title.
 
-=======
 When lean starts, only 2 characters show on the screen '%' on the left and '~'
 on the right. All other info is omitted (like the user and system you are on),
 and shown only when needed.
