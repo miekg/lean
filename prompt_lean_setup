@@ -80,14 +80,14 @@ prompt_lean_set_title() {
     # shows the current tty and dir and executed command in the title when a process is active
     print -Pn "\e]0;"
     print -Pn "%l %1d"
-    print -n ": $1"
+    [[ -n $1 ]] && print -n ": $1"
     print -Pn "\a"
 }
 
 prompt_lean_preexec() {
     cmd_timestamp=$EPOCHSECONDS
     local lean_no_title=$PROMPT_LEAN_NOTITLE
-    (($lean_no_title != 1)) && prompt_lean_set_title
+    (($lean_no_title != 1)) && prompt_lean_set_title $1
     unset lean_no_title
 }
 
