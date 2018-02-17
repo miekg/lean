@@ -34,7 +34,7 @@ PROMPT_LEAN_COLOR2: prompt character and directory color
 PROMPT_LEAN_VIMODE: used to determine wether or not to display indicator
 PROMPT_LEAN_VIMODE_FORMAT: Defaults to "%F{red}[NORMAL]%f"
 PROMPT_LEAN_NOTITLE: used to determine wether or not to set title, set to 0
- by defualt. Set it to your own condition, make it to be 1 when you don't
+ by default. Set it to your own condition, make it to be 1 when you don't
  want title.
 
 You can invoke it thus:
