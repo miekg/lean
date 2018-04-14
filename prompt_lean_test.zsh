@@ -19,6 +19,7 @@ function comphex() {
     else
         print "FAIL - $name"
         print $a |hexdump -C
+        echo
         print $b |hexdump -C
         exit 1
     fi
@@ -36,7 +37,7 @@ comphex "prompt" $PROMPT $expect
 ( cd /tmp
 prompt_lean_precmd
 prompt_lean_preexec
-expect='%F{yellow}%f%F{'$COLOR2'}/tmp%F{'$COLOR1'}$vcs_info_msg_0_ %F{yellow}%m%f%f%f'
+expect='%F{yellow}%f%F{'$COLOR2'}/tmp%F{'$COLOR1'}$vcs_info_msg_0_%f%f'
 comphex "rprompt" $RPROMPT $expect
 )
 
@@ -56,7 +57,7 @@ PROMPT_LEAN_RIGHT=right
 
 prompt_lean_precmd
 prompt_lean_preexec
-expect='%F{yellow}%f%F{'$COLOR2'}/tmp%F{'$COLOR1'}$vcs_info_msg_0_ %F{yellow}%m%f%fright%f'
+expect='%F{yellow}%f%F{'$COLOR2'}/tmp%F{'$COLOR1'}$vcs_info_msg_0_%fright%f'
 comphex "lean_right" $RPROMPT $expect
 )
 
@@ -77,6 +78,6 @@ sleep 1
 
 prompt_lean_precmd
 prompt_lean_preexec
-expect='%F{yellow}1s %f%F{'$COLOR2'}/tmp%F{'$COLOR1'}$vcs_info_msg_0_ %F{yellow}%m%f%f%f'
+expect='%F{yellow}1s %f%F{'$COLOR2'}/tmp%F{'$COLOR1'}$vcs_info_msg_0_%f%f'
 comphex "time" $RPROMPT $expect
 )
