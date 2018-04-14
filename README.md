@@ -1,5 +1,3 @@
-[![Build Status](https://img.shields.io/travis/miekg/lean/master.svg?label=build)](https://travis-ci.org/miekg/lean)
-
 About
 =====
 
@@ -54,6 +52,7 @@ Installation
 
 zgen
 ---
+
 If you use [zgen](https://github.com/tarjoilija/zgen) you can add the following
 to your `~/.zshrc`:
 
@@ -68,6 +67,7 @@ Note you must have the option PROMPT_SUBST set, see zshoptions(1).
 prezto
 ---
 If you use [prezto](https://github.com/sorin-ionescu/prezto) you should do the following:
+
 ```
 cd ~/.zprezto/ \
 && git submodule add https://github.com/miekg/lean.git modules/prompt/external/lean 2>/dev/null \
@@ -75,9 +75,17 @@ cd ~/.zprezto/ \
 && cd modules/prompt/functions \
 && ln -s ../external/lean/prompt_lean_setup
 ```
+
 Then in `~/.zpreztorc`:
+
 ```
 zstyle ':prezto:module:prompt' theme 'lean'
 ```
+
 `PROMPT_LEAN_LEFT` and `PROMPT_LEAN_RIGHT` should be customized in `~/.zshrc`.
 The rest variables should be customized in `~/.zshenv`.
+
+Development
+========
+
+If you make any changes please run `make test` to ensure the (little) test suite is succesfull.
