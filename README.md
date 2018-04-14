@@ -1,3 +1,5 @@
+[![Build Status](https://img.shields.io/travis/miekg/lean/master.svg?label=build)](https://travis-ci.org/miekg/lean)
+
 About
 =====
 
@@ -29,7 +31,7 @@ and clean
 * Uses `PROMPT_LEAN_LEFT` and `PROMPT_LEAN_RIGHT` to allow customization of the left
   and/or right side of the prompt.
 * For a configurable insertmode indicator, set the `PROMPT_LEAN_VIMODE` and `PROMPT_LEAN_VIMODE_FORMAT`
-variables. 
+variables.
   `PROMPT_LEAN_VIMODE_FORMAT` defaults to `"%F{red}[NORMAL]%f"`
 * Configurable colors to match your preferred scheme, by setting
   `PROMPT_LEAN_COLOR1` and `PROMPT_LEAN_COLOR2`
@@ -78,4 +80,4 @@ Then in `~/.zpreztorc`:
 zstyle ':prezto:module:prompt' theme 'lean'
 ```
 `PROMPT_LEAN_LEFT` and `PROMPT_LEAN_RIGHT` should be customized in `~/.zshrc`.
-The rest variables should be customized in `~/.zshenv`. 
+The rest variables should be customized in `~/.zshenv`.
