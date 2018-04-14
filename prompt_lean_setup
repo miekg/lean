@@ -1,15 +1,17 @@
 # lean prompt theme
 # by Miek Gieben: https://github.com/miekg/lean
 #
-# Base on Pure by Sindre Sorhus: https://github.com/sindresorhus/pure
-# Colors used: (see Vim's paramount theme)
-# 241 is the gray that is used.
-# 140 is the blue.
+# Based on Pure by Sindre Sorhus: https://github.com/sindresorhus/pure
+# Colors used: (see Vim's iceberg theme)
+# 242 is the gray that is used.
+# 110 is the blue.
+# 150 is the yellow.
 #
 # MIT License
 
-COLOR1=${PROMPT_LEAN_COLOR1-"241"}
-COLOR2=${PROMPT_LEAN_COLOR2-"140"}
+COLOR1=${PROMPT_LEAN_COLOR1-"242"}
+COLOR2=${PROMPT_LEAN_COLOR2-"110"}
+COLOR3=${PROMPT_LEAN_COLOR3-"150"}
 
 PROMPT_LEAN_TMUX=${PROMPT_LEAN_TMUX-"t "}
 PROMPT_LEAN_PATH_PERCENT=${PROMPT_LEAN_PATH_PERCENT-60}
@@ -31,6 +33,7 @@ PROMPT_LEAN_LEFT: executed to allow custom information in the left side
 PROMPT_LEAN_RIGHT: executed to allow custom information in the right side
 PROMPT_LEAN_COLOR1: jobs and VCS info indicator color
 PROMPT_LEAN_COLOR2: prompt character and directory color
+PROMPT_LEAN_COLOR3: elapsed time indicator color
 PROMPT_LEAN_VIMODE: used to determine wether or not to display indicator
 PROMPT_LEAN_VIMODE_FORMAT: Defaults to "%F{red}[NORMAL]%f"
 PROMPT_LEAN_NOTITLE: used to determine wether or not to set title, set to 0
@@ -123,8 +126,8 @@ prompt_lean_precmd() {
 
     setopt promptsubst
     local vcs_info_str='$vcs_info_msg_0_' # avoid https://github.com/njhartwell/pw3nage
-    PROMPT="$prompt_lean_jobs%F{yellow}${prompt_lean_tmux}%f`$PROMPT_LEAN_LEFT`%f%(?.%F{"$COLOR2"}.%B%F{red})%#%f%b "
-    RPROMPT="%F{yellow}`prompt_lean_cmd_exec_time`%f$prompt_lean_vimode%F{"$COLOR2"}`prompt_lean_pwd`%F{"$COLOR1"}$vcs_info_str`prompt_lean_git_dirty`$prompt_lean_host%f`$PROMPT_LEAN_RIGHT`%f"
+    PROMPT="$prompt_lean_jobs%F{"$COLOR3"}${prompt_lean_tmux}%f`$PROMPT_LEAN_LEFT`%f%(?.%F{"$COLOR2"}.%B%F{red})%#%f%b "
+    RPROMPT="%F{"$COLOR3"}`prompt_lean_cmd_exec_time`%f$prompt_lean_vimode%F{"$COLOR2"}`prompt_lean_pwd`%F{"$COLOR1"}$vcs_info_str`prompt_lean_git_dirty`$prompt_lean_host%f`$PROMPT_LEAN_RIGHT`%f"
 
     unset cmd_timestamp # reset value since `preexec` isn't always triggered
 }
@@ -150,7 +153,7 @@ prompt_lean_setup() {
     zstyle ':vcs_info:git*' formats ' %b'
     zstyle ':vcs_info:git*' actionformats ' %b|%a'
 
-    [[ "$SSH_CONNECTION" != '' ]] && prompt_lean_host=" %F{yellow}%m%f"
+    [[ "$SSH_CONNECTION" != '' ]] && prompt_lean_host=" %F{"$COLOR3"}%m%f"
     [[ "$TMUX" != '' ]] && prompt_lean_tmux=$PROMPT_LEAN_TMUX
 
     return 0
