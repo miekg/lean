@@ -25,7 +25,9 @@ plugin (or prior to sourcing `zgen`, etc.).
 and clean
 * Shows background jobs (in the left prompt)
 * Show (dirty) git repos
-* Shortens path if needed (longer then 70% of your screen)
+* Shortens path if needed (longer then 70% of your screen). Two methods are provided:
+'truncate' and 'shrink' (fish-style working directory). Set `PROMPT_LEAN_ABBR_METHOD` 
+to choose the one you like the most (default is 'truncate').
 * Uses `PROMPT_LEAN_LEFT` and `PROMPT_LEAN_RIGHT` to allow customization of the left
   and/or right side of the prompt.
 * For a configurable insertmode indicator, set the `PROMPT_LEAN_VIMODE` and `PROMPT_LEAN_VIMODE_FORMAT`

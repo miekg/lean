@@ -40,6 +40,9 @@ PROMPT_LEAN_VIMODE_FORMAT: Defaults to "%F{red}[NORMAL]%f"
 PROMPT_LEAN_NOTITLE: used to determine wether or not to set title, set to 0
  by default. Set it to your own condition, make it to be 1 when you don't
  want title.
+PROMPT_LEAN_ABBR_METHOD: used to indicate the abbreviation method for directory
+paths. Set it either to 'truncate' (default) or 'shrink' (fish-style 
+working directory)
 
 You can invoke it thus:
 
