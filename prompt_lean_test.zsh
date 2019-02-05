@@ -82,3 +82,21 @@ prompt_lean_preexec
 expect='%F{'$COLOR3'}1s %f%F{'$COLOR2'}/tmp%F{'$COLOR1'}$vcs_info_msg_0_%f%f'
 comphex "time" $RPROMPT $expect
 )
+
+( LONGDIR="/tmp/app/src/main/java/com/example"
+mkdir -p $LONGDIR && cd $LONGDIR
+abbr_dir=$(COLUMNS=100 PROMPT_LEAN_PATH_PERCENT=34 prompt_lean_abbr_shrink)
+comphex "abbr-shrink-unchanged" $abbr_dir $LONGDIR
+)
+
+( LONGDIR="/tmp/app/src/main/java/com/example"
+mkdir -p $LONGDIR && cd $LONGDIR
+abbr_dir=$(COLUMNS=100 PROMPT_LEAN_PATH_PERCENT=33 prompt_lean_abbr_shrink)
+comphex "abbr-shrink-1" $abbr_dir "/t/app/src/main/java/com/example"
+)
+
+( LONGDIR="/tmp/app/src/main/java/com/example"
+mkdir -p $LONGDIR && cd $LONGDIR
+abbr_dir=$(COLUMNS=100 PROMPT_LEAN_PATH_PERCENT=5 prompt_lean_abbr_shrink)
+comphex "abbr-shrink-full" $abbr_dir "/t/a/s/m/j/c/example"
+)
