@@ -41,7 +41,7 @@ PROMPT_LEAN_NOTITLE: used to determine wether or not to set title, set to 0
  by default. Set it to your own condition, make it to be 1 when you don't
  want title.
 PROMPT_LEAN_ABBR_METHOD: used to indicate the abbreviation method for directory
-paths. Set it either to 'truncate' (default) or 'shrink' (fish-style 
+paths. Set it either to 'truncate' (default) or 'shrink' (fish-style
 working directory)
 
 You can invoke it thus:
@@ -87,7 +87,7 @@ prompt_lean_set_title() {
     # shows the current tty and dir and executed command in the title when a process is active
     print -Pn "\e]0;"
     print -Pn "%l %1d"
-    print -n ": $1"
+    print -rn ": $1"
     print -Pn "\a"
 }
 
