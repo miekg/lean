@@ -9,6 +9,8 @@ code of the process isn't 0, git integration. So I took "pure", mixed in my
 ideas of what a prompt should look like and came up with "lean" - a 1 line
 prompt that stays out of your face.
 
+![lean example gif](https://github.com/miekg/lean/lean.gif "Example Session Using Lean")
+
 So lean is an evolution of pure, with the following changes:
 
 * Defaults to a very sparse setup, only showing information you need at the
