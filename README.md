@@ -63,18 +63,18 @@ Note you must have the option PROMPT_SUBST set, see zshoptions(1).
 prezto
 ---
 If you use [prezto](https://github.com/sorin-ionescu/prezto) you should do the following:
-
 ```
-cd ~/.zprezto/ \
-&& git submodule add https://github.com/miekg/lean.git modules/prompt/external/lean 2>/dev/null \
-&& git submodule update --init --recursive \
-&& cd modules/prompt/functions \
-&& ln -s ../external/lean/prompt_lean_setup
+cd $ZPREZTODIR && git clone --recurse-submodules https://github.com/belak/prezto-contrib contrib
 ```
 
-Then in `~/.zpreztorc`:
-
+Then in `~/.zpreztorc` add `contrib-prompt` to module load list and select `lean` as a theme:
 ```
+zstyle ':prezto:load' pmodule \
+  ... \
+  'contrib-prompt' \
+  'prompt' \
+  ...
+
 zstyle ':prezto:module:prompt' theme 'lean'
 ```
 
