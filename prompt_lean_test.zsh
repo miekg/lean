@@ -31,7 +31,7 @@ source prompt_lean_setup
 (
 prompt_lean_precmd
 prompt_lean_preexec
-expect='%F{'$COLOR3'}%f%f%(?.%F{'$COLOR2'}.%B%F{red})%#%f%b '
+expect='%F{'$COLOR3'}%f%f%(?.%F{'$COLOR2'}.%B%F{203})%#%f%k%b '
 comphex "prompt" $PROMPT $expect
 )
 
@@ -48,7 +48,7 @@ PROMPT_LEAN_LEFT=left
 
 prompt_lean_precmd
 prompt_lean_preexec
-expect='%F{'$COLOR3'}%fleft%f%(?.%F{'$COLOR2'}.%B%F{red})%#%f%b '
+expect='%F{'$COLOR3'}%fleft%f%(?.%F{'$COLOR2'}.%B%F{203})%#%f%k%b '
 comphex "lean_left" $PROMPT $expect
 )
 
@@ -69,7 +69,7 @@ source prompt_lean_setup # TMUX is only evaluated in setup
 
 prompt_lean_precmd
 prompt_lean_preexec
-expect='%F{'$COLOR3'}t%f%f%(?.%F{'$COLOR2'}.%B%F{red})%#%f%b '
+expect='%F{'$COLOR3'}t%f%f%(?.%F{'$COLOR2'}.%B%F{203})%#%f%k%b '
 comphex "tmux" $PROMPT $expect
 )
 
