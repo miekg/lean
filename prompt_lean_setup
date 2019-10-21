@@ -18,6 +18,8 @@ PROMPT_LEAN_PATH_PERCENT=${PROMPT_LEAN_PATH_PERCENT-60}
 PROMPT_LEAN_NOTITLE=${PROMPT_LEAN_NOTITLE-0}
 PROMPT_LEAN_ABBR_METHOD=${PROMPT_LEAN_ABBR_METHOD-"truncate"}
 
+_PROMPT_LEAN_TMP_FILE="/tmp/prompt_lean/$$"
+
 prompt_lean_help() {
   cat <<'EOF'
 This is a one line prompt that tries to stay out of your face. It utilizes
@@ -67,7 +69,7 @@ prompt_lean_human_time() {
 # fastest possible way to check if repo is dirty
 prompt_lean_git_dirty() {
     # check if we're in a git repo
-    command git rev-parse --is-inside-work-tree &>/dev/null || return
+    is_inside_git_repo || return
     # check if it's dirty
     local umode="-uno" #|| local umode="-unormal"
     command test -n "$(git status --porcelain --ignore-submodules ${umode} 2>/dev/null | head -100)"
@@ -130,7 +132,45 @@ prompt_lean_abbr_shrink() {
 	echo $lean_path
 }
 
+git_fetch() {
+  local arrows left right
+  local output
+
+  command git -c gc.auto=0 fetch >/dev/null 2>&1
+  output=$(command git rev-list --left-right --count HEAD...@'{u}' 2>/dev/null)
+  (( $? == 0)) || return
+
+  left=$(cut -f1 <<<$output)
+  right=$(cut -f2 <<<$output)
+
+  (( right > 0 )) && arrows+="${PROMPT_LEAN_GIT_DOWN_ARROW:-⇣}"
+  (( left > 0 )) && arrows+="${PROMPT_LEAN_GIT_UP_ARROW:-⇡}"
+
+  echo $arrows
+}
+
+is_inside_git_repo() {
+  command git rev-parse --is-inside-work-tree &>/dev/null
+}
+
 prompt_lean_precmd() {
+    git_fetch_async_worker() {
+      : > $_PROMPT_LEAN_TMP_FILE
+      is_inside_git_repo || return
+      # save to temp file
+      printf "%s" "$(git_fetch)" > $_PROMPT_LEAN_TMP_FILE
+      # signal parent
+      kill -s USR1 $$
+    }
+
+    # kill child if necessary
+    if [[ "${ASYNC_PENDING_PROC-0}" != 0 ]]; then
+        kill -s HUP $ASYNC_PENDING_PROC >/dev/null 2>&1 || :
+    fi
+
+    [ "$PWD" != "$_PROMPT_LEAN_OLDPWD" ] && unset PROMPT_LEAN_GIT_CHECK 
+    _PROMPT_LEAN_OLDPWD=$PWD
+
     vcs_info
     rehash
 
@@ -153,10 +193,26 @@ prompt_lean_precmd() {
 
     setopt promptsubst
     local vcs_info_str='$vcs_info_msg_0_' # avoid https://github.com/njhartwell/pw3nage
+    local prompt_lean_git_check='$PROMPT_LEAN_GIT_CHECK'
     PROMPT="$prompt_lean_jobs%F{"$COLOR3"}${prompt_lean_tmux}%f`$PROMPT_LEAN_LEFT`%f%(?.%F{"$COLOR2"}.%B%F{203})%#%f%k%b "
-    RPROMPT="%F{"$COLOR3"}`prompt_lean_cmd_exec_time`%f$prompt_lean_vimode%F{"$COLOR2"}`prompt_lean_pwd`%F{"$COLOR1"}$vcs_info_str`prompt_lean_git_dirty`$prompt_lean_host%f`$PROMPT_LEAN_RIGHT`%f"
+    RPROMPT="%F{"$COLOR3"}`prompt_lean_cmd_exec_time`%f$prompt_lean_vimode%F{"$COLOR3"}$prompt_lean_git_check%F{"$COLOR1"}`prompt_lean_git_dirty`$vcs_info_str %F{"$COLOR2"}`prompt_lean_pwd`$prompt_lean_host%f`$PROMPT_LEAN_RIGHT`%f"
 
     unset cmd_timestamp # reset value since `preexec` isn't always triggered
+
+    # start background computation
+    git_fetch_async_worker &!
+    ASYNC_PENDING_PROC=$!
+}
+
+TRAPUSR1() {
+    # read from temp file
+    PROMPT_LEAN_GIT_CHECK=$(<$_PROMPT_LEAN_TMP_FILE)
+
+    # reset proc number
+    unset ASYNC_PENDING_PROC
+
+    # redisplay
+    zle && zle reset-prompt
 }
 
 function zle-keymap-select {
@@ -164,8 +220,14 @@ function zle-keymap-select {
     zle reset-prompt
 }
 
+prompt_lean_zshexit() {
+    rm -f $_PROMPT_LEAN_TMP_FILE
+}
+
 prompt_lean_setup() {
     prompt_opts=(cr percent sp subst)
+
+    mkdir -p $(dirname $_PROMPT_LEAN_TMP_FILE)
 
     zmodload zsh/datetime
     autoload -Uz add-zsh-hook
@@ -175,6 +237,7 @@ prompt_lean_setup() {
 
     add-zsh-hook precmd prompt_lean_precmd
     add-zsh-hook preexec prompt_lean_preexec
+    add-zsh-hook zshexit prompt_lean_zshexit
 
     zstyle ':vcs_info:*' enable git
     zstyle ':vcs_info:git*' formats ' %b'
