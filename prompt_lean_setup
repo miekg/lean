@@ -16,6 +16,7 @@ COLOR3=${PROMPT_LEAN_COLOR3-"150"}
 PROMPT_LEAN_TMUX=${PROMPT_LEAN_TMUX-"t "}
 PROMPT_LEAN_PATH_PERCENT=${PROMPT_LEAN_PATH_PERCENT-60}
 PROMPT_LEAN_NOTITLE=${PROMPT_LEAN_NOTITLE-0}
+PROMPT_LEAN_CMD_MAX_EXEC_TIME=5
 PROMPT_LEAN_ABBR_METHOD=${PROMPT_LEAN_ABBR_METHOD-"truncate"}
 
 prompt_lean_help() {
@@ -80,7 +81,7 @@ prompt_lean_cmd_exec_time() {
     local stop=$EPOCHSECONDS
     local start=${cmd_timestamp:-$stop}
     integer elapsed=$stop-$start
-    (($elapsed > ${PROMPT_LEAN_CMD_MAX_EXEC_TIME:=5})) && prompt_lean_human_time $elapsed
+    (($elapsed > ${PROMPT_LEAN_CMD_MAX_EXEC_TIME})) && prompt_lean_human_time $elapsed
 }
 
 prompt_lean_set_title() {
@@ -92,7 +93,7 @@ prompt_lean_set_title() {
 }
 
 prompt_lean_preexec() {
-    cmd_timestamp=$EPOCHSECONDS
+    typeset -g cmd_timestamp=$EPOCHSECONDS
     local lean_no_title=$PROMPT_LEAN_NOTITLE
     (($lean_no_title != 1)) && prompt_lean_set_title "$1"
     unset lean_no_title
