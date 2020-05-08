@@ -16,7 +16,7 @@ COLOR3=${PROMPT_LEAN_COLOR3-"150"}
 PROMPT_LEAN_TMUX=${PROMPT_LEAN_TMUX-"t "}
 PROMPT_LEAN_PATH_PERCENT=${PROMPT_LEAN_PATH_PERCENT-60}
 PROMPT_LEAN_NOTITLE=${PROMPT_LEAN_NOTITLE-0}
-PROMPT_LEAN_ABBR_METHOD=${PROMPT_LEAN_ABBR_METHOD-"truncate"}
+PROMPT_LEAN_CMD_MAX_EXEC_TIME=5
 
 prompt_lean_help() {
   cat <<'EOF'
@@ -40,9 +40,6 @@ PROMPT_LEAN_VIMODE_FORMAT: Defaults to "%F{red}[NORMAL]%f"
 PROMPT_LEAN_NOTITLE: used to determine wether or not to set title, set to 0
  by default. Set it to your own condition, make it to be 1 when you don't
  want title.
-PROMPT_LEAN_ABBR_METHOD: used to indicate the abbreviation method for directory
-paths. Set it either to 'truncate' (default) or 'shrink' (fish-style
-working directory)
 
 You can invoke it thus:
 
@@ -80,19 +77,19 @@ prompt_lean_cmd_exec_time() {
     local stop=$EPOCHSECONDS
     local start=${cmd_timestamp:-$stop}
     integer elapsed=$stop-$start
-    (($elapsed > ${PROMPT_LEAN_CMD_MAX_EXEC_TIME:=5})) && prompt_lean_human_time $elapsed
+    (($elapsed > ${PROMPT_LEAN_CMD_MAX_EXEC_TIME})) && prompt_lean_human_time $elapsed
 }
 
 prompt_lean_set_title() {
     # shows the current tty and dir and executed command in the title when a process is active
     print -Pn "\e]0;"
     print -Pn "%l %1d"
-    print -rn ": $1"
+    print -n ": $1"
     print -Pn "\a"
 }
 
 prompt_lean_preexec() {
-    cmd_timestamp=$EPOCHSECONDS
+    typeset -g cmd_timestamp=$EPOCHSECONDS
     local lean_no_title=$PROMPT_LEAN_NOTITLE
     (($lean_no_title != 1)) && prompt_lean_set_title "$1"
     unset lean_no_title
@@ -101,33 +98,10 @@ prompt_lean_preexec() {
 prompt_lean_pwd() {
     local lean_path="`print -Pn '%~'`"
     if (($#lean_path / $COLUMNS.0 * 100 > ${PROMPT_LEAN_PATH_PERCENT:=60})); then
-		case "$PROMPT_LEAN_ABBR_METHOD" in
-			"truncate") prompt_lean_abbr_truncate;;
-			"shrink")   prompt_lean_abbr_shrink;;
-		esac
+        print -Pn '...%2/'
         return
     fi
     print "$lean_path"
-}
-
-prompt_lean_abbr_truncate() {
-	print -Pn '...%2/'
-}
-
-prompt_lean_abbr_shrink() {
-	setopt local_options extendedglob histsubstpattern
-
-	local lean_path=$(print -Pn '%~')
-	local maxlen=$((PROMPT_LEAN_PATH_PERCENT * COLUMNS / 100))
-	local prevlen=0
-
-	# iterate until target length achieved or no more abbreviation possible
-	while (($#lean_path > maxlen && $#lean_path != prevlen)); do
-		prevlen=$#lean_path
-		lean_path=${lean_path:s_(#b)([^/])([^/])##/_$match[1]/_}
-	done
-
-	echo $lean_path
 }
 
 prompt_lean_precmd() {
@@ -153,7 +127,7 @@ prompt_lean_precmd() {
 
     setopt promptsubst
     local vcs_info_str='$vcs_info_msg_0_' # avoid https://github.com/njhartwell/pw3nage
-    PROMPT="$prompt_lean_jobs%F{"$COLOR3"}${prompt_lean_tmux}%f`$PROMPT_LEAN_LEFT`%f%(?.%F{"$COLOR2"}.%B%F{203})%#%f%k%b "
+    PROMPT="$prompt_lean_jobs%F{"$COLOR3"}${prompt_lean_tmux}%f`$PROMPT_LEAN_LEFT`%f%(?.%F{"$COLOR2"}.%F{203})%#%f%k%b "
     RPROMPT="%F{"$COLOR3"}`prompt_lean_cmd_exec_time`%f$prompt_lean_vimode%F{"$COLOR2"}`prompt_lean_pwd`%F{"$COLOR1"}$vcs_info_str`prompt_lean_git_dirty`$prompt_lean_host%f`$PROMPT_LEAN_RIGHT`%f"
 
     unset cmd_timestamp # reset value since `preexec` isn't always triggered
