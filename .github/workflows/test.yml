@@ -19,5 +19,5 @@ jobs:
         uses: actions/checkout@v2
       - name: Install zsh
         run: sudo apt-get update; sudo apt-get install zsh
-      - name: Test syntax
-        run: make test
+      - name: Test
+        run: make
