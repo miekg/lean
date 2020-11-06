@@ -1,0 +1,23 @@
+name: Tests
+on:
+  pull_request:
+    types:
+      - opened
+      - synchronize
+    branches:
+      - master
+  push:
+    branches:
+      - master
+
+jobs:
+  tests:
+    name: Run tests
+    runs-on: ubuntu-latest
+    steps:
+      - name: Set up git repository
+        uses: actions/checkout@v2
+      - name: Install zsh
+        run: sudo apt-get update; sudo apt-get install zsh
+      - name: Test
+        run: make
