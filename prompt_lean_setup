@@ -18,6 +18,8 @@ PROMPT_LEAN_PATH_PERCENT=${PROMPT_LEAN_PATH_PERCENT-60}
 PROMPT_LEAN_NOTITLE=${PROMPT_LEAN_NOTITLE-0}
 PROMPT_LEAN_CMD_MAX_EXEC_TIME=5
 PROMPT_LEAN_ABBR_METHOD=${PROMPT_LEAN_ABBR_METHOD-"truncate"}
+PROMPT_LEAN_VCS=${PROMPT_LEAN_VCS-1}
+PROMPT_LEAN_PWD=${PROMPT_LEAN_PWD-1}
 
 prompt_lean_help() {
   cat <<'EOF'
@@ -36,7 +38,7 @@ PROMPT_LEAN_RIGHT: executed to allow custom information in the right side
 PROMPT_LEAN_COLOR1: jobs and VCS info indicator color
 PROMPT_LEAN_COLOR2: prompt character and directory color
 PROMPT_LEAN_COLOR3: elapsed time indicator color
-PROMPT_LEAN_VIMODE: used to determine wether or not to display indicator
+PROMPT_LEAN_VIMODE: used to determine whether or not to display indicator
 PROMPT_LEAN_VIMODE_FORMAT: Defaults to "%F{red}[NORMAL]%f"
 PROMPT_LEAN_NOTITLE: used to determine wether or not to set title, set to 0
  by default. Set it to your own condition, make it to be 1 when you don't
@@ -44,6 +46,8 @@ PROMPT_LEAN_NOTITLE: used to determine wether or not to set title, set to 0
 PROMPT_LEAN_ABBR_METHOD: used to indicate the abbreviation method for directory
 paths. Set it either to 'truncate' (default) or 'shrink' (fish-style
 working directory)
+PROMPT_LEAN_VCS: when set to 0, disables git details from the prompt
+PROMPT_LEAN_PWD: when set to 0, disables showing pwd in the prompt
 
 You can invoke it thus:
 
@@ -67,6 +71,9 @@ prompt_lean_human_time() {
 
 # fastest possible way to check if repo is dirty
 prompt_lean_git_dirty() {
+    if [[ $PROMPT_LEAN_VCS != 1 ]]; then
+        return
+    fi
     # check if we're in a git repo
     command git rev-parse --is-inside-work-tree &>/dev/null || return
     # check if it's dirty
@@ -132,7 +139,7 @@ prompt_lean_abbr_shrink() {
 }
 
 prompt_lean_precmd() {
-    vcs_info
+    [[ $PROMPT_LEAN_VCS == 1 ]] && vcs_info
     rehash
 
     local jobs
@@ -153,9 +160,13 @@ prompt_lean_precmd() {
     prompt_lean_vimode="${${KEYMAP/vicmd/$lean_vimode_indicator}/(main|viins)/}"
 
     setopt promptsubst
-    local vcs_info_str='$vcs_info_msg_0_' # avoid https://github.com/njhartwell/pw3nage
+    local vcs_info_str=''
+    [[ $PROMPT_LEAN_VCS == 1 ]] && vcs_info_str='$vcs_info_msg_0_' # avoid https://github.com/njhartwell/pw3nage
     PROMPT="$prompt_lean_jobs%F{"$COLOR3"}${prompt_lean_tmux}%f`$PROMPT_LEAN_LEFT`%f%(?.%F{"$COLOR2"}.%B%F{203})%#%f%k%b "
-    RPROMPT="%F{"$COLOR3"}`prompt_lean_cmd_exec_time`%f$prompt_lean_vimode%F{"$COLOR2"}`prompt_lean_pwd`%F{"$COLOR1"}$vcs_info_str`prompt_lean_git_dirty`$prompt_lean_host%f`$PROMPT_LEAN_RIGHT`%f"
+
+    local lean_pwd=''
+    [[ $PROMPT_LEAN_PWD == 1 ]] && lean_pwd=`prompt_lean_pwd`
+    RPROMPT="%F{"$COLOR3"}`prompt_lean_cmd_exec_time`%f$prompt_lean_vimode%F{"$COLOR2"}$lean_pwd%F{"$COLOR1"}$vcs_info_str`prompt_lean_git_dirty`$prompt_lean_host%f`$PROMPT_LEAN_RIGHT`%f"
 
     unset cmd_timestamp # reset value since `preexec` isn't always triggered
 }
@@ -170,16 +181,18 @@ prompt_lean_setup() {
 
     zmodload zsh/datetime
     autoload -Uz add-zsh-hook
-    autoload -Uz vcs_info
+    [[ $PROMPT_LEAN_VCS == 1 ]] && autoload -Uz vcs_info
 
     [[ "$PROMPT_LEAN_VIMODE" != '' ]] && zle -N zle-keymap-select
 
     add-zsh-hook precmd prompt_lean_precmd
     add-zsh-hook preexec prompt_lean_preexec
 
-    zstyle ':vcs_info:*' enable git
-    zstyle ':vcs_info:git*' formats ' %b'
-    zstyle ':vcs_info:git*' actionformats ' %b|%a'
+    if [[ $PROMPT_LEAN_VCS == 1 ]]; then
+        zstyle ':vcs_info:*' enable git
+        zstyle ':vcs_info:git*' formats ' %b'
+        zstyle ':vcs_info:git*' actionformats ' %b|%a'
+    fi
 
     [[ "$SSH_CONNECTION" != '' ]] && prompt_lean_host=" %F{"$COLOR3"}%m%f"
     [[ "$TMUX" != '' ]] && prompt_lean_tmux=$PROMPT_LEAN_TMUX
