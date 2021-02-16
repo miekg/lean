@@ -39,15 +39,12 @@ PROMPT_LEAN_COLOR1: jobs and VCS info indicator color
 PROMPT_LEAN_COLOR2: prompt character and directory color
 PROMPT_LEAN_COLOR3: elapsed time indicator color
 PROMPT_LEAN_VIMODE: used to determine whether or not to display indicator
-PROMPT_LEAN_VIMODE_FORMAT: Defaults to "%F{red}[NORMAL]%f"
-PROMPT_LEAN_NOTITLE: used to determine wether or not to set title, set to 0
- by default. Set it to your own condition, make it to be 1 when you don't
- want title.
-PROMPT_LEAN_ABBR_METHOD: used to indicate the abbreviation method for directory
-paths. Set it either to 'truncate' (default) or 'shrink' (fish-style
-working directory)
+PROMPT_LEAN_VIMODE_FORMAT: defaults to "%F{red}[NORMAL]%f"
+PROMPT_LEAN_NOTITLE: used to determine wether or not to set title, set to 0 by default
+PROMPT_LEAN_ABBR_METHOD: used to indicate the abbreviation method for directory paths. Set it
+    either to 'truncate' (default) or 'shrink' (fish-style working directory)
 PROMPT_LEAN_VCS: when set to 0, disables git details from the prompt
-PROMPT_LEAN_PWD: when set to 0, disables showing pwd in the prompt
+PROMPT_LEAN_PWD: when set to 0, disables showing CWD in the prompt
 
 You can invoke it thus:
 
