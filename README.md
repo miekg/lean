@@ -7,6 +7,8 @@ if the exit code of the process isn't 0, git integration. So I took "pure", mixe
 what a prompt should look like and came up with "lean" - a 1 line prompt that stays out of your
 face.
 
+When lean starts, only 2 characters show on the screen '%' on the left and '~' on the right.
+
 ![lean example gif](https://github.com/miekg/lean/blob/master/lean.gif "Example Session Using Lean")
 
 So lean is an evolution of pure, with the following changes:
@@ -33,13 +35,10 @@ So lean is an evolution of pure, with the following changes:
     `"%F{red}[NORMAL]%f"`
 *   Configurable colors to match your preferred scheme, by setting `PROMPT_LEAN_COLOR1` and
     `PROMPT_LEAN_COLOR2`
-*   Use `PROMPT_LEAN_NOTITLE` to customize when the title should not be display. Useful for
-    terminals can not show title properly.
+*   Use `PROMPT_LEAN_NOTITLE` to customize when the title should not be displayed. Useful for
+    terminals that can not show title properly.
 *   Use `PROMPT_LEAN_VCS` and `PROMPT_LEAN_PWD` to disable showing VCS info or the current working
     directory.
-
-When lean starts, only 2 characters show on the screen '%' on the left and '~' on the right. All
-other info is omitted (like the user and system you are on), and shown only when needed.
 
 # Installation
 
