@@ -136,7 +136,7 @@ prompt_lean_abbr_shrink() {
 }
 
 prompt_lean_precmd() {
-    [[ $PROMPT_LEAN_VCS == 1 ]] && vcs_info
+    [[ $PROMPT_LEAN_VCS == 1 ]] && vcs_info 2>/dev/null
     rehash
 
     local jobs
