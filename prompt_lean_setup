@@ -43,7 +43,8 @@ PROMPT_LEAN_VIMODE_FORMAT: defaults to "%F{red}[NORMAL]%f"
 PROMPT_LEAN_NOTITLE: used to determine wether or not to set title, set to 0 by default
 PROMPT_LEAN_ABBR_METHOD: used to indicate the abbreviation method for directory paths. Set it
     either to 'truncate' (default) or 'shrink' (fish-style working directory)
-PROMPT_LEAN_VCS: when set to 0, disables git details from the prompt
+PROMPT_LEAN_VCS: when set to 0, disables git details from the prompt, the branch name is truncated
+    if it's longer than 20 characters
 PROMPT_LEAN_PWD: when set to 0, disables showing CWD in the prompt
 
 You can invoke it thus:
@@ -187,8 +188,8 @@ prompt_lean_setup() {
 
     if [[ $PROMPT_LEAN_VCS == 1 ]]; then
         zstyle ':vcs_info:*' enable git
-        zstyle ':vcs_info:git*' formats ' %b'
-        zstyle ':vcs_info:git*' actionformats ' %b|%a'
+        zstyle ':vcs_info:git*' formats ' %20>...>%b%>>'
+        zstyle ':vcs_info:git*' actionformats ' %20>...>%b%>>|%a'
     fi
 
     [[ "$SSH_CONNECTION" != '' ]] && prompt_lean_host=" %F{"$COLOR3"}%m%f"

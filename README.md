@@ -23,7 +23,8 @@ So lean is an evolution of pure, with the following changes:
 *   Show remote host if logged in through SSH.
 *   All in one line, most stuff in the right prompt, leaving the left prompt nice and clean
 *   Shows background jobs (in the left prompt)
-*   Show (dirty) git repos (can be disabled by setting `PROMPT_LEAN_VCS` to `0`)
+*   Show (dirty) git repos (can be disabled by setting `PROMPT_LEAN_VCS` to `0`). The branch name is
+    trunctated to 20 characters.
 *   Shortens path if needed (longer then 70% of your screen). Two methods are provided: 'truncate'
     and 'shrink' (fish-style working directory). Set `PROMPT_LEAN_ABBR_METHOD` to choose the one you
     like the most (default is 'truncate'). Set `PROMPT_LEAN_PWD` to `0` to disable showing the path
