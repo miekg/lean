@@ -24,14 +24,14 @@ So lean is an evolution of pure, with the following changes:
 *   All in one line, most stuff in the right prompt, leaving the left prompt nice and clean
 *   Shows background jobs (in the left prompt)
 *   Show (dirty) git repos (can be disabled by setting `PROMPT_LEAN_VCS` to `0`). The branch name is
-    trunctated to 20 characters.
+    truncated to 20 characters.
 *   Shortens path if needed (longer then 70% of your screen). Two methods are provided: 'truncate'
     and 'shrink' (fish-style working directory). Set `PROMPT_LEAN_ABBR_METHOD` to choose the one you
     like the most (default is 'truncate'). Set `PROMPT_LEAN_PWD` to `0` to disable showing the path
     altogether.
 *   Uses `PROMPT_LEAN_LEFT` and `PROMPT_LEAN_RIGHT` to allow customization of the left and/or right
     side of the prompt.
-*   For a configurable insertmode indicator, set the `PROMPT_LEAN_VIMODE` and
+*   For a configurable insert-mode indicator, set the `PROMPT_LEAN_VIMODE` and
     `PROMPT_LEAN_VIMODE_FORMAT` variables. `PROMPT_LEAN_VIMODE_FORMAT` defaults to
     `"%F{red}[NORMAL]%f"`
 *   Configurable colors to match your preferred scheme, by setting `PROMPT_LEAN_COLOR1` and

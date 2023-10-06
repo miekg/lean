@@ -23,34 +23,40 @@ PROMPT_LEAN_PWD=${PROMPT_LEAN_PWD-1}
 
 prompt_lean_help() {
   cat <<'EOF'
-This is a one line prompt that tries to stay out of your face. It utilizes
-the right side prompt for most information, like the CWD. The left side of
-the prompt is only a '%'. The only other information shown on the left are
-the jobs numbers of background jobs. When the exit code of a process isn't
-zero the prompt turns red. If a process takes more then 5 (default) seconds
-to run the total running time is shown in the next prompt.
-
-Configuration:
-
-PROMPT_LEAN_TMUX: used to indicate being in tmux, set to "t ", by default
-PROMPT_LEAN_LEFT: executed to allow custom information in the left side
-PROMPT_LEAN_RIGHT: executed to allow custom information in the right side
-PROMPT_LEAN_COLOR1: jobs and VCS info indicator color
-PROMPT_LEAN_COLOR2: prompt character and directory color
-PROMPT_LEAN_COLOR3: elapsed time indicator color
-PROMPT_LEAN_VIMODE: used to determine whether or not to display indicator
-PROMPT_LEAN_VIMODE_FORMAT: defaults to "%F{red}[NORMAL]%f"
-PROMPT_LEAN_NOTITLE: used to determine wether or not to set title, set to 0 by default
-PROMPT_LEAN_ABBR_METHOD: used to indicate the abbreviation method for directory paths. Set it
-    either to 'truncate' (default) or 'shrink' (fish-style working directory)
-PROMPT_LEAN_VCS: when set to 0, disables git details from the prompt, the branch name is truncated
-    if it's longer than 20 characters
-PROMPT_LEAN_PWD: when set to 0, disables showing CWD in the prompt
+Lean is a one line prompt that tries to stay out of your face. It utilizes
+the right side prompt for most information, like the current working directory
+and version control system (only Git)info. The left side of the prompt is only
+a '%'. The only other information shown on the left are the jobs numbers of
+background jobs. When the exit code of a process isn't zero the prompt turns
+red. If a process takes more then 5 (default) seconds to run the total running
+time is shown in the next prompt.
 
 You can invoke it thus:
 
   prompt lean
 
+Several aspects Lean can be configured:
+
+PROMPT_LEAN_TMUX:   used to indicate being in tmux, set to "t " by default
+PROMPT_LEAN_LEFT:   executed to allow custom information in the left side
+PROMPT_LEAN_RIGHT:  executed to allow custom information in the right side
+PROMPT_LEAN_COLOR1: jobs and VCS info indicator color
+PROMPT_LEAN_COLOR2: prompt character and directory color
+PROMPT_LEAN_COLOR3: elapsed time indicator color
+PROMPT_LEAN_VIMODE: used to determine whether or not to display indicator
+PROMPT_LEAN_PWD:    when set to 0, disables showing CWD in the prompt
+PROMPT_LEAN_VCS:    when set to 0, disables git details from the prompt, the
+                    branch name is truncated if it's longer than 20
+                    characters
+PROMPT_LEAN_VIMODE_FORMAT:
+                    defaults to "%F{red}[NORMAL]%f"
+PROMPT_LEAN_NOTITLE:
+                    used to determine wether or not to set title, set to 0
+                    by default
+PROMPT_LEAN_ABBR_METHOD:
+                    used to indicate the abbreviation method for directory
+                    paths. Set it either to 'truncate' (default) or 'shrink'
+                    (fish-style working directory)
 EOF
 }
 
