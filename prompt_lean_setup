@@ -84,7 +84,7 @@ prompt_lean_git_dirty() {
     local umode="-uno" #|| local umode="-unormal"
     command test -n "$(git status --porcelain --ignore-submodules ${umode} 2>/dev/null | head -100)"
 
-    (($? == 0)) && echo '+'
+    (($? == 0)) && echo '!'
 }
 
 # displays the exec time of the last command if set threshold was exceeded
