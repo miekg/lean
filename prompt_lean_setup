@@ -106,11 +106,7 @@ prompt_lean_set_title() {
 
 prompt_lean_preexec() {
     typeset -g cmd_timestamp=$EPOCHSECONDS
-
-    local lean_no_title=$PROMPT_LEAN_NOTITLE
-    (($lean_no_title != 1)) && prompt_lean_set_title "$1"
-
-    unset lean_no_title
+    (($PROMPT_LEAN_NOTITLE != 1)) && prompt_lean_set_title "$1"
 }
 
 prompt_lean_pwd() {
@@ -175,10 +171,8 @@ prompt_lean_precmd() {
     [[ $PROMPT_LEAN_PWD == 1 ]] && lean_pwd=`prompt_lean_pwd`
     RPROMPT="%F{"$COLOR3"}`prompt_lean_cmd_exec_time`%f$prompt_lean_vimode%F{"$COLOR2"}$lean_pwd%F{"$COLOR1"}$vcs_info_str`prompt_lean_git_dirty`$prompt_lean_host%f`$PROMPT_LEAN_RIGHT`%f"
 
-    local lean_no_title=$PROMPT_LEAN_NOTITLE
-    (($lean_no_title != 1)) && prompt_lean_set_title "$1"
+    (($PROMPT_LEAN_NOTITLE != 1)) && prompt_lean_set_title "$1"
 
-    unset lean_no_title
     unset cmd_timestamp # reset value since `preexec` isn't always triggered
 }
 
