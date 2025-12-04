@@ -1,3 +1,4 @@
+# vim: ft=zsh
 # lean prompt theme
 # by Miek Gieben: https://github.com/miekg/lean
 #
@@ -8,6 +9,7 @@
 # 150 is the yellow.
 #
 # MIT License
+
 
 COLOR1=${PROMPT_LEAN_COLOR1-"242"}
 COLOR2=${PROMPT_LEAN_COLOR2-"110"}
