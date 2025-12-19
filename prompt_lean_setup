@@ -197,8 +197,8 @@ prompt_lean_setup() {
 
     if [[ $PROMPT_LEAN_VCS == 1 ]]; then
         zstyle ':vcs_info:*' enable git
-        zstyle ':vcs_info:git*' formats ' %20>...>%b%>>'
-        zstyle ':vcs_info:git*' actionformats ' %20>...>%b%>>|%a'
+        zstyle ':vcs_info:git*' formats ' %25>...>%b%>>'
+        zstyle ':vcs_info:git*' actionformats ' %25>...>%b%>>|%a'
     fi
 
     [[ "$SSH_CONNECTION" != '' ]] && prompt_lean_host=" %F{"$COLOR3"}%m%f"
