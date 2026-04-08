@@ -4,16 +4,15 @@
 #
 # Based on Pure by Sindre Sorhus: https://github.com/sindresorhus/pure
 # Colors used: (see Vim's iceberg theme)
-# 242 is the gray that is used.
-# 110 is the blue.
-# 150 is the yellow.
+# 242 is the gray that is used. Nord theme: 23
+# 110 is the blue. Nord theme: 67
+# 150 is the yellow. Nord theme: 222
 #
 # MIT License
 
-
-COLOR1=${PROMPT_LEAN_COLOR1-"242"}
-COLOR2=${PROMPT_LEAN_COLOR2-"110"}
-COLOR3=${PROMPT_LEAN_COLOR3-"150"}
+PROMPT_LEAN_COLOR1=${PROMPT_LEAN_COLOR1-"23"}
+PROMPT_LEAN_COLOR2=${PROMPT_LEAN_COLOR2-"67"}
+PROMPT_LEAN_COLOR3=${PROMPT_LEAN_COLOR3-"222"}
 
 PROMPT_LEAN_TMUX=${PROMPT_LEAN_TMUX-"t "}
 PROMPT_LEAN_PATH_PERCENT=${PROMPT_LEAN_PATH_PERCENT-60}
@@ -25,40 +24,33 @@ PROMPT_LEAN_PWD=${PROMPT_LEAN_PWD-1}
 
 prompt_lean_help() {
   cat <<'EOF'
-Lean is a one line prompt that tries to stay out of your face. It utilizes
-the right side prompt for most information, like the current working directory
-and version control system (only Git)info. The left side of the prompt is only
-a '%'. The only other information shown on the left are the jobs numbers of
-background jobs. When the exit code of a process isn't zero the prompt turns
-red. If a process takes more then 5 (default) seconds to run the total running
-time is shown in the next prompt.
+This is a one line prompt that tries to stay out of your face. It utilizes
+the right side prompt for most information, like the CWD. The left side of
+the prompt is only a '%'. The only other information shown on the left are
+the jobs numbers of background jobs. When the exit code of a process isn't
+zero the prompt turns red. If a process takes more then 5 (default) seconds
+to run the total running time is shown in the next prompt.
+
+Configuration:
+
+PROMPT_LEAN_TMUX: used to indicate being in tmux, set to "t ", by default
+PROMPT_LEAN_LEFT: executed to allow custom information in the left side
+PROMPT_LEAN_RIGHT: executed to allow custom information in the right side
+PROMPT_LEAN_COLOR1: jobs and VCS info indicator color
+PROMPT_LEAN_COLOR2: prompt character and directory color
+PROMPT_LEAN_COLOR3: elapsed time indicator color
+PROMPT_LEAN_VIMODE: used to determine whether or not to display indicator
+PROMPT_LEAN_VIMODE_FORMAT: defaults to "%F{red}[NORMAL]%f"
+PROMPT_LEAN_NOTITLE: used to determine wether or not to set title, set to 0 by default
+PROMPT_LEAN_ABBR_METHOD: used to indicate the abbreviation method for directory paths. Set it
+    either to 'truncate' (default) or 'shrink' (fish-style working directory)
+PROMPT_LEAN_VCS: when set to 0, disables git details from the prompt
+PROMPT_LEAN_PWD: when set to 0, disables showing CWD in the prompt
 
 You can invoke it thus:
 
   prompt lean
 
-Several aspects Lean can be configured:
-
-PROMPT_LEAN_TMUX:   used to indicate being in tmux, set to "t " by default
-PROMPT_LEAN_LEFT:   executed to allow custom information in the left side
-PROMPT_LEAN_RIGHT:  executed to allow custom information in the right side
-PROMPT_LEAN_COLOR1: jobs and VCS info indicator color
-PROMPT_LEAN_COLOR2: prompt character and directory color
-PROMPT_LEAN_COLOR3: elapsed time indicator color
-PROMPT_LEAN_VIMODE: used to determine whether or not to display indicator
-PROMPT_LEAN_PWD:    when set to 0, disables showing CWD in the prompt
-PROMPT_LEAN_VCS:    when set to 0, disables git details from the prompt, the
-                    branch name is truncated if it's longer than 20
-                    characters
-PROMPT_LEAN_VIMODE_FORMAT:
-                    defaults to "%F{red}[NORMAL]%f"
-PROMPT_LEAN_NOTITLE:
-                    used to determine wether or not to set title, set to 0
-                    by default
-PROMPT_LEAN_ABBR_METHOD:
-                    used to indicate the abbreviation method for directory
-                    paths. Set it either to 'truncate' (default) or 'shrink'
-                    (fish-style working directory)
 EOF
 }
 
@@ -156,7 +148,7 @@ prompt_lean_precmd() {
     }
     # print with [ ] and comma separated
     prompt_lean_jobs=""
-    [[ -n $jobs ]] && prompt_lean_jobs="%F{"$COLOR1"}["${(j:,:)jobs}"] "
+    [[ -n $jobs ]] && prompt_lean_jobs="%F{"$PROMPT_LEAN_COLOR1"}["${(j:,:)jobs}"] "
 
     local lean_vimode_default="%F{red}[NORMAL]%f"
     #If LEAN_VIMODE is set, set lean_vimode_indicator to either PROMPT_LEAN_VIMOD_FORMAT or a default value
@@ -167,11 +159,11 @@ prompt_lean_precmd() {
     setopt promptsubst
     local vcs_info_str=''
     [[ $PROMPT_LEAN_VCS == 1 ]] && vcs_info_str='$vcs_info_msg_0_' # avoid https://github.com/njhartwell/pw3nage
-    PROMPT="$prompt_lean_jobs%F{"$COLOR3"}${prompt_lean_tmux}%f`$PROMPT_LEAN_LEFT`%f%(?.%F{"$COLOR2"}.%B%F{203})%#%f%k%b "
+    PROMPT="$prompt_lean_jobs%F{"$PROMPT_LEAN_COLOR3"}${prompt_lean_tmux}%f`$PROMPT_LEAN_LEFT`%f%(?.%F{"$PROMPT_LEAN_COLOR2"}.%B%F{203})%#%f%k%b "
 
     local lean_pwd=''
     [[ $PROMPT_LEAN_PWD == 1 ]] && lean_pwd=`prompt_lean_pwd`
-    RPROMPT="%F{"$COLOR3"}`prompt_lean_cmd_exec_time`%f$prompt_lean_vimode%F{"$COLOR2"}$lean_pwd%F{"$COLOR1"}$vcs_info_str`prompt_lean_git_dirty`$prompt_lean_host%f`$PROMPT_LEAN_RIGHT`%f"
+    RPROMPT="%F{"$PROMPT_LEAN_COLOR3"}`prompt_lean_cmd_exec_time`%f$prompt_lean_vimode%F{"$PROMPT_LEAN_COLOR2"}$lean_pwd%F{"$PROMPT_LEAN_COLOR1"}$vcs_info_str`prompt_lean_git_dirty`$prompt_lean_host%f`$PROMPT_LEAN_RIGHT`%f"
 
     (($PROMPT_LEAN_NOTITLE != 1)) && prompt_lean_set_title "$1"
 
@@ -201,7 +193,7 @@ prompt_lean_setup() {
         zstyle ':vcs_info:git*' actionformats ' %25>...>%b%>>|%a'
     fi
 
-    [[ "$SSH_CONNECTION" != '' ]] && prompt_lean_host=" %F{"$COLOR3"}%m%f"
+    [[ "$SSH_CONNECTION" != '' ]] && prompt_lean_host=" %F{"$PROMPT_LEAN_COLOR3"}%m%f"
     [[ "$TMUX" != '' ]] && prompt_lean_tmux=$PROMPT_LEAN_TMUX
 
     return 0
